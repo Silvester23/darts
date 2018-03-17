@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
+import json
 import os
+
+import requests
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,7 +28,7 @@ SECRET_KEY = '@a1&*d1do3f_=0yvxw$bj21fy2$e+8+wxpcsai_$p^nwl!&u%r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['next-darts.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', 'next-darts.herokuapp.com']
 
 
 # Application definition
@@ -77,10 +80,21 @@ WSGI_APPLICATION = 'dart.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+s = requests.session()
+s.headers = {
+    'Accept': 'application/vnd.heroku+json; version=3'
+}
+r = s.get('https://api.heroku.com/apps/next-darts/config-vars')
+db_params = json.loads(r.text)
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': db_params['DATABASE_NAME'],
+        'USER': db_params['DATABASE_USER'],
+        'PASSWORD': db_params['DATABASE_PASSWORD'],
+        'HOST': db_params['DATABASE_HOST'],
+        'PORT': '5432',
     }
 }
 

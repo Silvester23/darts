@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
@@ -5,9 +6,8 @@ from django.views.generic import FormView, TemplateView
 
 from ranking.decorators import player_login_required
 from ranking.forms import LoginForm, SignupForm, ReportResultForm
-from ranking.support import set_session_player, get_session_player, clear_session_player
 from ranking.models import Match, Player
-from django.db.models import Q
+from ranking.support import set_session_player, get_session_player, clear_session_player
 
 
 class HomeView(TemplateView):

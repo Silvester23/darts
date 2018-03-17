@@ -1,14 +1,11 @@
 import logging
 
 from django.forms import (
-    PasswordInput, TextInput, NumberInput,
+    PasswordInput, NumberInput,
     CharField, Form, ValidationError, ModelForm
 )
-
 from django.utils.translation import ugettext as _
 from django_select2.forms import Select2Widget
-
-
 
 from ranking.models import Player, Match
 
