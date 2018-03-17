@@ -1,0 +1,3 @@
+{% load templatetags %}
+{{ match.date|date:"j.n.Y H:i" }}: {{ match.challenger }} ({{ match.challenger_delta|sign|safe }})<strong> {{ match.challenger_score }}
+                    - {{ match.defendant_score }}</strong> {{ match.defendant }} ({{ match.defendant_delta|sign|safe }})

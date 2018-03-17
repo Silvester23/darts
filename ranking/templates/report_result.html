@@ -6,13 +6,20 @@
 
 {% block content %}
 
+     <h1>Ergebnis Eintragen</h1>
+    <hr>
     <form method="post">
     {% csrf_token %}
+    {% if form.non_field_errors %}
+               <div class="col-12 alert alert-danger" role="alert">
+                 {{ form.non_field_errors|join:", " }}
+               </div>
+               {% endif %}
     <p><label for="defendant">Gegner auswählen:</label> {{ form.defendant }}</p>
         {% for error in form.defendant.errors %}
           <p style="color: red">{{ error }}</p>
         {% endfor %}
-    <p>Sätze: <label for="challenger_points">Du</label> {{ form.challenger_score }} : {{ form.defendant_score }} <label for="challenger_points">Gegner</label></p>
+    <p>Sätze: <label for="challenger_points">Du</label> {{ form.challenger_score }} - {{ form.defendant_score }} <label for="challenger_points">Gegner</label></p>
      {% for error in form.challenger_score.errors %}
           <p style="color: red">{{ error }}</p>
         {% endfor %}

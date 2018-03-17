@@ -1,7 +1,8 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <h2>Log in</h2>
+  <h1>Login</h1>
+    <hr>
   <form method="post">
     {% csrf_token %}
   {% if form.non_field_errors %}
@@ -21,6 +22,6 @@
         {% endfor %}
       </p>
     {% endfor %}
-    <button type="submit">Log in</button>
+    <button type="submit">Login</button>
   </form>
 {% endblock %}

@@ -21,11 +21,8 @@ class Player(models.Model):
     def is_password(self, plain_password):
         return check_password(plain_password, self.pw_hash)
 
-    def __unicode__(self):
-        return '{} ({})'.format(self.name, self.elo)
-
     def __str__(self):
-        return self.__unicode__()
+        return self.name
 
     def update_elo(self, expected_performance, victory):
         self.elo = self.elo + 32 * (int(victory) - expected_performance)
@@ -40,6 +37,8 @@ class Match(models.Model):
     challenger_score = models.IntegerField(validators=[MinValueValidator(0)])
     defendant_score = models.IntegerField(validators=[MinValueValidator(0)])
     date = models.DateTimeField(default=timezone.now)
+    challenger_delta = models.IntegerField()
+    defendant_delta = models.IntegerField()
 
     @property
     def winner(self):
@@ -56,8 +55,18 @@ class Match(models.Model):
         exp_c = 1 / (1 + 10 ** ((self.defendant.elo - self.challenger.elo) / 400))
         exp_d = 1 - exp_c
 
+        c_elo = self.challenger.elo
+        d_elo = self.defendant.elo
+        print('OLD C/D: ', c_elo, d_elo)
         self.challenger.update_elo(exp_c, self.is_winner(self.challenger))
         self.defendant.update_elo(exp_d, self.is_winner(self.defendant))
+
+        print('NEW C/D: ', self.challenger.elo, self.defendant.elo)
+        self.challenger_delta = self.challenger.elo - c_elo
+        self.defendant_delta = self.defendant.elo - d_elo
+
+    def has_player(self, player):
+        return self.defendant == player or self.challenger == player
 
     def __str__(self):
         return 'Match on {}: {} {} : {} {}'.format(self.date, self.challenger, self.challenger_score, self.defendant_score, self.defendant)

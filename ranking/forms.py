@@ -37,17 +37,12 @@ class SignupForm(ModelForm):
 class LoginForm(Form):
 
     username = CharField(
-        label=_('Username'),
+        label='Name',
     )
 
     password = CharField(
-        help_text=_(
-            'was sent to you with your first game'
-            ' (you may have changed it since)'
-        ),
-        widget=PasswordInput(attrs={
-            'placeholder': _('Your Password')
-        }),
+        widget=PasswordInput(),
+        label='Passwort',
     )
 
     def __init__(self, *args, **kwargs):
@@ -61,7 +56,7 @@ class LoginForm(Form):
             # basic field validation will fail anyway: no need to hit the DB
             return
 
-        error_message = _('Invalid user name or password.')
+        error_message = 'Ungültiger Name oder ungültiges Passwort'
         try:
             player = Player.objects.get(
                name=username
@@ -90,4 +85,5 @@ class ReportResultForm(ModelForm):
     def clean(self):
         cleaned_data = super().clean()
         if cleaned_data['defendant_score'] == cleaned_data['challenger_score']:
-            return ValidationError('Unentschieden ist nicht möglich')
+            raise ValidationError('Unentschieden ist nicht möglich')
+        return cleaned_data

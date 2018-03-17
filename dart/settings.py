@@ -81,12 +81,14 @@ WSGI_APPLICATION = 'dart.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.environ['DATABASE_NAME'],
-        'USER': os.environ['DATABASE_USER'],
-        'PASSWORD': os.environ['DATABASE_PASSWORD'],
-        'HOST': os.environ['DATABASE_HOST'],
-        'PORT': '5432',
+        #'ENGINE': 'django.db.backends.postgresql',
+        #'NAME': os.environ['DATABASE_NAME'],
+        #'USER': os.environ['DATABASE_USER'],
+        #'PASSWORD': os.environ['DATABASE_PASSWORD'],
+        #'HOST': os.environ['DATABASE_HOST'],
+        #'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'db.sqlite3',
     }
 }
 
@@ -108,7 +110,7 @@ AUTH_USER_MODEL = 'core.User'
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Berlin'
 
 USE_I18N = True
 
@@ -127,3 +129,4 @@ STATICFILES_DIRS = [
 ]
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+

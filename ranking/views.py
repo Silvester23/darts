@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import FormView, TemplateView
+from django.views.generic import FormView, TemplateView, ListView
 
 from ranking.decorators import player_login_required
 from ranking.forms import LoginForm, SignupForm, ReportResultForm
@@ -10,21 +10,30 @@ from ranking.models import Match, Player
 from ranking.support import set_session_player, get_session_player, clear_session_player
 
 
-class HomeView(TemplateView):
-    template_name = 'home.html'
-
-    def get(self, request, *args, **kwargs):
-        context = self.get_context_data(**kwargs)
-        print(context)
-        context['player'] = get_session_player(request.session)
-        context['latest_matches'] = Match.objects.order_by('-date')[:5]
-        context['ranking'] = Player.objects.order_by('-elo')
-        print(context['latest_matches'])
-        return self.render_to_response(context)
+class AuthMixin(object):
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        player = get_session_player(self.request.session)
+        if player is not None:
+            context['player'] = player
+        return context
 
     @method_decorator(player_login_required)
     def dispatch(self, request, *args, **kwargs):
         return super().dispatch(request, *args, **kwargs)
+
+
+class HomeView(AuthMixin, TemplateView):
+    template_name = 'home.html'
+
+    def get(self, request, *args, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        context['latest_matches'] = Match.objects.order_by('-date')[:5]
+        context['ranking'] = Player.objects.order_by('-elo')
+
+        print(context['latest_matches'])
+        return self.render_to_response(context)
 
 
 class LoginView(FormView):
@@ -59,7 +68,7 @@ class SignupView(FormView):
         return HttpResponseRedirect(self.get_success_url())
 
 
-class ReportResultView(FormView):
+class ReportResultView(AuthMixin, FormView):
     form_class = ReportResultForm
     template_name = 'report_result.html'
 
@@ -83,6 +92,8 @@ class ReportResultView(FormView):
 
         return HttpResponseRedirect(self.get_success_url())
 
-    @method_decorator(player_login_required)
-    def dispatch(self, request, *args, **kwargs):
-        return super().dispatch(request, *args, **kwargs)
+class MatchesView(AuthMixin, ListView):
+
+    model = Match
+    template_name = 'matches.html'
+    ordering = '-date'

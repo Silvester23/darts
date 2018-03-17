@@ -26,5 +26,6 @@ urlpatterns = [
     path('', ranking.views.HomeView.as_view(), name='home'),
     path('login/', ranking.views.LoginView.as_view(), name='login'),
     path('logout/', ranking.views.logout, name='logout'),
-    path('result', ranking.views.ReportResultView.as_view(), name='result'),
+    path('result/', ranking.views.ReportResultView.as_view(), name='result'),
+    path('matches/', ranking.views.MatchesView.as_view(), name='matches'),
 ]
