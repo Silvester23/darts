@@ -90,6 +90,9 @@ import logging
 logging.info(db_params)
 print(db_params)
 
+import os
+print(os.environ)
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
