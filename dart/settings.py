@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import json
 import os
 
-import requests
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -80,27 +79,14 @@ WSGI_APPLICATION = 'dart.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-s = requests.session()
-s.headers = {
-    'Accept': 'application/vnd.heroku+json; version=3'
-}
-r = s.get('https://api.heroku.com/apps/next-darts/config-vars')
-db_params = json.loads(r.text)
-import logging
-logging.info(db_params)
-print(db_params)
-
-import os
-print(os.environ)
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': '',#db_params['DATABASE_NAMEa'],
-        'USER': '',#db_params['DATABASE_USER'],
-        'PASSWORD': '',#db_params['DATABASE_PASSWORD'],
-        'HOST': '',#db_params['DATABASE_HOST'],
-        'PORT': '',#'5432',
+        'NAME': os.environ['DATABASE_NAME'],
+        'USER': os.environ['DATABASE_USER'],
+        'PASSWORD': os.environ['DATABASE_PASSWORD'],
+        'HOST': os.environ['DATABASE_HOST'],
+        'PORT': '5432',
     }
 }
 
