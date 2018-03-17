@@ -86,6 +86,8 @@ s.headers = {
 }
 r = s.get('https://api.heroku.com/apps/next-darts/config-vars')
 db_params = json.loads(r.text)
+import logging
+logging.info(db_params)
 
 DATABASES = {
     'default': {
