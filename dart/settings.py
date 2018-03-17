@@ -25,7 +25,7 @@ SECRET_KEY = '@a1&*d1do3f_=0yvxw$bj21fy2$e+8+wxpcsai_$p^nwl!&u%r'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['next-darts.herokuapp.com']
 
 
 # Application definition
