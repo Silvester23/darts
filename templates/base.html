@@ -10,12 +10,16 @@
 <body>
 
 <ul>
+    {% if not player %}
     <li><a href="{% url 'login' %}">Login</a></li>
-    <li><a href="{% url 'logout' %}">Logout</a></li>
     <li><a href="{% url 'signup' %}">Anmelden</a></li>
+    {% endif %}
+        {% if player %}
     <li><a href="{% url 'home' %}">Rangliste</a></li>
     <li><a href="">Matches</a></li>
     <li><a href="{% url 'result' %}">Ergebnis Eintragen</a></li>
+    <li><a href="{% url 'logout' %}">Logout</a></li>
+    {% endif %}
 
 </ul>
 
