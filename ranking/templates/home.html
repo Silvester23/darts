@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Hallo, {{ player.name }}</h1>
+
+    <h2>Letzte Matches:</h2>
+    {% for match in latest_matches %}
+        <p>{{ match }}</p>
+    {% endfor %}
+
+    <h2>Rangliste</h2>
+    {% for player in ranking %}
+        <p>{{ forloop.counter }}. {{ player.name }} {{ player.elo|floatformat:"0" }}</p>
+    {% endfor %}
+{% endblock %}

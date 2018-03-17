@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block head %}
+    {{ form.media.css }}
+{% endblock %}
+
+{% block content %}
+
+    <form method="post">
+    {% csrf_token %}
+    <p><label for="defendant">Gegner auswählen:</label> {{ form.defendant }}</p>
+        {% for error in form.defendant.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+    <p>Sätze: <label for="challenger_points">Du</label> {{ form.challenger_score }} : {{ form.defendant_score }} <label for="challenger_points">Gegner</label></p>
+     {% for error in form.challenger_score.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+    {% for error in form.defendant_score.errors %}
+          <p style="color: red">{{ error }}</p>
+        {% endfor %}
+    <button type="submit">Abschicken</button>
+    </form>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ form.media.js }}
+{% endblock %}
