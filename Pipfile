@@ -11,6 +11,7 @@ django = "*"
 "django-select2" = "*"
 gunicorn = "*"
 "psycopg2" = "*"
+whitenoise = "*"
 
 
 [dev-packages]
