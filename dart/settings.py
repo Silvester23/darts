@@ -88,15 +88,16 @@ r = s.get('https://api.heroku.com/apps/next-darts/config-vars')
 db_params = json.loads(r.text)
 import logging
 logging.info(db_params)
+print(db_params)
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': db_params['DATABASE_NAME'],
-        'USER': db_params['DATABASE_USER'],
-        'PASSWORD': db_params['DATABASE_PASSWORD'],
-        'HOST': db_params['DATABASE_HOST'],
-        'PORT': '5432',
+        'NAME': '',#db_params['DATABASE_NAMEa'],
+        'USER': '',#db_params['DATABASE_USER'],
+        'PASSWORD': '',#db_params['DATABASE_PASSWORD'],
+        'HOST': '',#db_params['DATABASE_HOST'],
+        'PORT': '',#'5432',
     }
 }
 
