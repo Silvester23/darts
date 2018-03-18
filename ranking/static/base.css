@@ -1,0 +1,14 @@
+
+main {
+    padding: 3rem 1.5rem;
+}
+
+body {
+    padding-top: 5rem;
+}
+
+@media (min-width: 1200px) {
+    .container{
+        max-width: 1400px;
+    }
+}
