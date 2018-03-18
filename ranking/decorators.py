@@ -12,7 +12,7 @@ def url_with_query(path, **kwargs):
 def player_login_required(view_func):
 
     def player_login_wrapper(request, *args, **kwargs):
-        print('IN DECO: ', get_session_player(request.session))
+
         if get_session_player(request.session) is not None:
             return view_func(request, *args, **kwargs)
         return HttpResponseRedirect(

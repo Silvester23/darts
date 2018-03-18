@@ -32,7 +32,7 @@ class HomeView(AuthMixin, TemplateView):
         context['latest_matches'] = Match.objects.order_by('-date')[:5]
         context['ranking'] = Player.objects.order_by('-elo')
 
-        print(context['latest_matches'])
+
         return self.render_to_response(context)
 
 

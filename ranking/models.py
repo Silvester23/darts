@@ -57,11 +57,10 @@ class Match(models.Model):
 
         c_elo = self.challenger.elo
         d_elo = self.defendant.elo
-        print('OLD C/D: ', c_elo, d_elo)
+
         self.challenger.update_elo(exp_c, self.is_winner(self.challenger))
         self.defendant.update_elo(exp_d, self.is_winner(self.defendant))
 
-        print('NEW C/D: ', self.challenger.elo, self.defendant.elo)
         self.challenger_delta = self.challenger.elo - c_elo
         self.defendant_delta = self.defendant.elo - d_elo
 

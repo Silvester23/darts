@@ -49,7 +49,7 @@ class LoginForm(Form):
         super(LoginForm, self).__init__(*args, **kwargs)
 
     def clean(self):
-        print('CLEANING')
+
         username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
         if username is None or password is None:
