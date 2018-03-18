@@ -28,4 +28,5 @@ urlpatterns = [
     path('logout/', ranking.views.logout, name='logout'),
     path('result/', ranking.views.ReportResultView.as_view(), name='result'),
     path('matches/', ranking.views.MatchesView.as_view(), name='matches'),
+    path('profile/<slug:slug>/', ranking.views.ProfileView.as_view(), name='profile')
 ]

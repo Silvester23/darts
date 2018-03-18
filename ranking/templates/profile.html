@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load templatetags %}
+
+{% block content %}
+    <h1>Profil von {{ profile.name }}</h1>
+    <hr>
+    <div class="row">
+        <div class="col-6">
+            <div class="container-fluid">
+                <div class="row">
+                <h2>Statistiken</h2>
+                </div>
+                <div class="row">
+                <dl class="row">
+  <dt class="col-sm-3">Rang:</dt>
+  <dd class="col-sm-9">1</dd>
+                    <dt class="col-sm-3">Punkte:</dt>
+                    <dd class="col-sm-9">{{ profile.elo|floatformat:"0" }}</dd>
+
+</dl></div>
+
+
+                <div class="row">
+                <table class="table table-sm">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Gewonnen</th>
+                        <th scope="col">Verloren</th>
+                        <th scope="col">Quote</th>
+                        <th scope="col">Gesamt</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr>
+                        <th scope="row">Partien</th>
+                        <td>{{ profile.matches_won|length }}</td>
+                        <td>{{ profile.matches_lost|length }}</td>
+                        <td>{{ profile.winrate|floatformat }}%</td>
+                        <td>{{ profile.matches|length }}</td>
+                    </tr>
+
+                    <tr>
+                        <th scope="row">Sätze</th>
+                        <td>{{ profile.num_legs_won }}</td>
+                        <td>{{ profile.num_legs_lost }}</td>
+                        <td>{{ profile.legs_winrate|floatformat }}%</td>
+                        <td>{{ profile.total_legs }}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                </dl>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-6">
+
+            <h2>Partien</h2>
+            {% if not profile.matches %}
+                Bisher keine...
+            {% endif %}
+            {% for match in profile.matches %}
+                {% include "fragments/match.html" %}
+            {% endfor %}
+
+        </div>
+    </div>
+{% endblock %}

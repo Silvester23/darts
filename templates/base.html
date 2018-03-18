@@ -36,7 +36,7 @@
             {% endif %}
             {% if player %}
                 <li class="nav-item {% active "home" %}"><a class="nav-link" href="{% url 'home' %}">Rangliste</a></li>
-                <li class="nav-item {% active "matches" %}"><a class="nav-link" href="{% url 'matches' %}">Alle Matches</a></li>
+                <li class="nav-item {% active "matches" %}"><a class="nav-link" href="{% url 'matches' %}">Alle Partien</a></li>
                 <li class="nav-item {% active "result" %}"><a class="nav-link" href="{% url 'result' %}">Ergebnis Eintragen</a></li>
                 <li class="nav-item"><a class="nav-link" href="{% url 'logout' %}">Logout</a></li>
             {% endif %}

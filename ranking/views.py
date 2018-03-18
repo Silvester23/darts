@@ -2,7 +2,7 @@ from django.db.models import Q
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
-from django.views.generic import FormView, TemplateView, ListView
+from django.views.generic import FormView, TemplateView, ListView, DetailView
 
 from ranking.decorators import player_login_required
 from ranking.forms import LoginForm, SignupForm, ReportResultForm
@@ -27,7 +27,6 @@ class HomeView(AuthMixin, TemplateView):
     template_name = 'home.html'
 
     def get(self, request, *args, **kwargs):
-
         context = super().get_context_data(**kwargs)
         context['latest_matches'] = Match.objects.order_by('-date')[:5]
         context['ranking'] = Player.objects.order_by('-elo')
@@ -92,8 +91,16 @@ class ReportResultView(AuthMixin, FormView):
 
         return HttpResponseRedirect(self.get_success_url())
 
+
 class MatchesView(AuthMixin, ListView):
 
     model = Match
     template_name = 'matches.html'
     ordering = '-date'
+
+
+class ProfileView(AuthMixin, DetailView):
+    model = Player
+    slug_field = 'name'
+    context_object_name = 'profile'
+    template_name = 'profile.html'

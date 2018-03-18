@@ -4,41 +4,64 @@
 {% block content %}
 
     <h1>Hallo {{ player.name }}!</h1>
-<hr>
+    <hr>
 
     <div class="row">
         <div class="col-6">
             <h2>Rangliste</h2>
 
 
-        <table class="table">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Spieler</th>
-      <th scope="col">Punkte</th>
-    </tr>
-  </thead>
-  <tbody>
-  {% for p in ranking %}
-    <tr {% if p == player %}class="table-primary"{% endif %}>
-      <th scope="row">{{ forloop.counter  }} </th>
-      <td>{{ p.name }}</td>
-      <td>{{ p.elo|floatformat:"0" }}</td>
-    </tr>
-    {% endfor %}
-  </tbody>
-</table>
+            <table class="table table-hover">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Spieler</th>
+                    <th scope="col">Punkte</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for p in ranking %}
+                    <tr {% if p == player %}class="table-primary"{% endif %} data-href="{% url "profile" p.slug %}">
+                        <th scope="row">{{ forloop.counter }} </th>
+                        <td>{{ p.name }}</td>
+                        <td>{{ p.elo|floatformat:"0" }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
 
         <div class="col-6">
-        {% if latest_matches %}
-            <h2>Die letzten Matches:</h2>
+
+            <h2>Die letzten Partien</h2>
+            {% if not latest_matches %}
+                Bisher keine...
+            {% endif %}
             {% for match in latest_matches %}
-                <p>{% include "fragments/match.html" %}</p>
+                {% include "fragments/match.html" %}
             {% endfor %}
-        {% endif %}
+
         </div>
     </div>
 
+
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        $(function () {
+            $('.table tr[data-href]').each(function () {
+                $(this).css('cursor', 'pointer').hover(
+                    function () {
+                        $(this).addClass('active');
+                    },
+                    function () {
+                        $(this).removeClass('active');
+                    }).click(function () {
+                        document.location = $(this).attr('data-href');
+                    }
+                );
+            });
+        });
+    </script>
 {% endblock %}

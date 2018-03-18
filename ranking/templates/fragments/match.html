@@ -1,3 +1,5 @@
 {% load templatetags %}
+<p {% if not player == profile and match|has_player:player %}class="bg-light"{% endif  %}>
 {{ match.date|date:"j.n.Y H:i" }}: {{ match.challenger }} ({{ match.challenger_delta|sign|safe }})<strong> {{ match.challenger_score }}
                     - {{ match.defendant_score }}</strong> {{ match.defendant }} ({{ match.defendant_delta|sign|safe }})
+</p>
