@@ -32,9 +32,3 @@ urlpatterns = [
     path('matches/', ranking.views.MatchesView.as_view(), name='matches'),
     path('profile/<slug:slug>/', ranking.views.ProfileView.as_view(), name='profile')
 ]
-
-if settings.DEBUG:
-    import debug_toolbar
-    urlpatterns = [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-    ] + urlpatterns
