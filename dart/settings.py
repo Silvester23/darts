@@ -29,6 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', 'next-darts.herokuapp.com']
 
+INTERNAL_IPS = ['127.0.0.1', 'localhost']
+
 
 # Application definition
 
@@ -42,6 +44,8 @@ INSTALLED_APPS = [
     'core',
     'ranking',
     'django_select2',
+
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -52,6 +56,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'dart.urls'

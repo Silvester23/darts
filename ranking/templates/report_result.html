@@ -15,15 +15,15 @@
                  {{ form.non_field_errors|join:", " }}
                </div>
                {% endif %}
-    <p><label for="defendant">Gegner auswählen:</label> {{ form.defendant }}</p>
-        {% for error in form.defendant.errors %}
+    <p><label for="defendant">Gegner auswählen:</label> {{ form.opponent }}</p>
+        {% for error in form.opponent.errors %}
           <p style="color: red">{{ error }}</p>
         {% endfor %}
-    <p>Sätze: <label for="challenger_points">Du</label> {{ form.challenger_score }} - {{ form.defendant_score }} <label for="challenger_points">Gegner</label></p>
-     {% for error in form.challenger_score.errors %}
+    <p>Sätze: <label for="challenger_points">Du</label> {{ form.player_score }} - {{ form.opponent_score }} <label for="challenger_points">Gegner</label></p>
+     {% for error in form.opponent_score.errors %}
           <p style="color: red">{{ error }}</p>
         {% endfor %}
-    {% for error in form.defendant_score.errors %}
+    {% for error in form.player_score.errors %}
           <p style="color: red">{{ error }}</p>
         {% endfor %}
     <button type="submit">Abschicken</button>

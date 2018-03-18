@@ -9,3 +9,4 @@ class PlayerAdmin(admin.ModelAdmin):
 
 admin.site.register(ranking.models.Player, PlayerAdmin)
 admin.site.register(ranking.models.Match)
+admin.site.register(ranking.models.MatchParticipation)

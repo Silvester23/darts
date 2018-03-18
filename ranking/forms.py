@@ -2,10 +2,11 @@ import logging
 
 from django.forms import (
     PasswordInput, NumberInput,
-    CharField, Form, ValidationError, ModelForm
+    CharField, Form, ValidationError, ModelForm, ModelChoiceField, IntegerField
 )
 from django.utils.translation import ugettext as _
 from django_select2.forms import Select2Widget
+from django.core.validators import MinValueValidator
 
 from ranking.models import Player, Match
 
@@ -72,18 +73,8 @@ class LoginForm(Form):
             raise ValidationError(error_message)
 
 
-class ReportResultForm(ModelForm):
-    class Meta:
-        model = Match
-        fields = ['defendant', 'defendant_score', 'challenger_score']
-        widgets = {
-            'defendant': Select2Widget,
-            'defendant_score': NumberInput(attrs={'style': 'width:4ch'}),
-            'challenger_score': NumberInput(attrs={'style': 'width:4ch'}),
-        }
+class ReportResultForm(Form):
+    opponent = ModelChoiceField(queryset=Player.objects.all(), widget=Select2Widget)
+    player_score = IntegerField(validators=[MinValueValidator(0)], widget=NumberInput(attrs={'style': 'width:4ch'}))
+    opponent_score = IntegerField(validators=[MinValueValidator(0)], widget=NumberInput(attrs={'style': 'width:4ch'}))
 
-    def clean(self):
-        cleaned_data = super().clean()
-        if cleaned_data['defendant_score'] == cleaned_data['challenger_score']:
-            raise ValidationError('Unentschieden ist nicht möglich')
-        return cleaned_data

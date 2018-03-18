@@ -3,6 +3,9 @@
 {% block content %}
   <h1>Alle Partien</h1>
     <hr>
+     {% if not match_list %}
+                Noch keine Partien...
+            {% endif %}
 {% for match in match_list %}
     <p>{% include "fragments/match.html" %}</p>
     {% endfor %}

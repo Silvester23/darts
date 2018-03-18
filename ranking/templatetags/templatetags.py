@@ -19,11 +19,7 @@ def active(context, pattern_or_urlname):
 
 @register.filter
 def sign(value):
+    value = round(value)
     if value > 0:
         return '<span class="text-success">+{}</span>'.format(value)
     return '<span class="text-danger">{}</span>'.format(value)
-
-
-@register.filter(takes_context=True)
-def has_player(match, player):
-    return match.has_player(player)

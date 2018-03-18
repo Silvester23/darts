@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls import include, url
 
 import ranking.views
 
@@ -30,3 +32,9 @@ urlpatterns = [
     path('matches/', ranking.views.MatchesView.as_view(), name='matches'),
     path('profile/<slug:slug>/', ranking.views.ProfileView.as_view(), name='profile')
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        url(r'^__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns

@@ -16,6 +16,16 @@
   <dd class="col-sm-9">1</dd>
                     <dt class="col-sm-3">Punkte:</dt>
                     <dd class="col-sm-9">{{ profile.elo|floatformat:"0" }}</dd>
+                    {% if profile.bogey %}
+
+                    <dt class="col-sm-3">Angstgegner:</dt>
+                    <dd class="col-sm-9">{{ profile.bogey.0 }} ({{ profile.bogey.3|floatformat }}% Gewinnrate)</dd>
+                    {% endif %}
+
+                    {% if profile.favorite %}
+                        <dt class="col-sm-3">Lieblingsgegner:</dt>
+                    <dd class="col-sm-9">{{ profile.favorite.0 }} ({{ profile.favorite.3|floatformat }}% Gewinnrate)</dd>
+                {% endif %}
 
 </dl></div>
 
@@ -60,7 +70,7 @@
 
             <h2>Partien</h2>
             {% if not profile.matches %}
-                Bisher keine...
+                Noch keine Partien...
             {% endif %}
             {% for match in profile.matches %}
                 {% include "fragments/match.html" %}
@@ -68,4 +78,5 @@
 
         </div>
     </div>
+
 {% endblock %}
